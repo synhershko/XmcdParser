@@ -23,7 +23,7 @@ namespace XmcdParser
 					throw new InvalidDataException("Not an XMCD file");
 			});
 
-			Add(@"^\# \s* Track \s+ frame \s+ offsets \s*: \s* \n (^\# \s* (\d+) \s* \n)+", (disk, collection) =>
+			Add(@"^\#\s* Track \s*frame \s*offsets\s*:\s*\n(^\#\s* (\d+)\s*\n)+", (disk, collection) =>
 			{
 				foreach (Capture capture in collection[0].Groups[2].Captures)
 				{
@@ -66,6 +66,7 @@ namespace XmcdParser
 					value = value.Substring(value.Length - 4);
 				}
 				disk.Year = int.Parse(value);
+                if (disk.Year == 0) disk.Year = null;
 			}
 			);
 
