@@ -14,8 +14,7 @@ namespace XmcdParser
 		{
 			using (var store = new DocumentStore
 			{
-				Url = "https://2.ravenhq.com/databases/ayende-freedb",
-				ApiKey = "2cdd2658-1181-4d67-b15e-7adcc48c461a"
+				Url = "http://localhost:8080", DefaultDatabase = "FreeDB"
 			}.Initialize())
 			{
 				var session = store.OpenSession();
@@ -48,7 +47,7 @@ namespace XmcdParser
 
 			var sp = Stopwatch.StartNew();
 
-			using (var bz2 = new BZip2InputStream(File.Open(@"D:\Data\freedb-complete-20120101.tar.bz2", FileMode.Open)))
+			using (var bz2 = new BZip2InputStream(File.Open(@"z:\freedb-complete-20120901.tar.bz2", FileMode.Open)))
 			using (var tar = new TarInputStream(bz2))
 			{
 				TarEntry entry;

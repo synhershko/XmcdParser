@@ -8,7 +8,7 @@ namespace XmcdParser
 		public string Artist { get; set; }
 		public int DiskLength { get; set; }
 		public string Genre { get; set; }
-		public int Year { get; set; }
+		public int? Year { get; set; }
 		public List<string> DiskIds { get; set; }
 
 		public List<int> TrackFramesOffsets { get; set; }
