@@ -119,7 +119,7 @@ namespace XmcdIndexer
 			if(string.IsNullOrEmpty(disk.Title) == false)
 				ReusableDoc.Add(fields[1]);
 
-			fields[2].SetValue(disk.DiskIds.FirstOrDefault() ?? Guid.NewGuid().ToString());
+			fields[2].SetValue(disk.FreeDBDiskIds.FirstOrDefault() ?? Guid.NewGuid().ToString());
 			ReusableDoc.Add(fields[2]);
 
 			_indexWriter.AddDocument(ReusableDoc);
