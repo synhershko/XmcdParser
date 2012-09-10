@@ -14,7 +14,7 @@ namespace XmcdParser
 		{
 			using (var store = new DocumentStore
 			{
-				Url = "http://localhost:8080", DefaultDatabase = "FreeDB"
+				Url = "http://localhost:8080", DefaultDatabase = "Music"
 			}.Initialize())
 			{
 				var session = store.OpenSession();
@@ -24,6 +24,32 @@ namespace XmcdParser
 				{
 					session.Store(diskToAdd);
 					count += 1;
+
+                    diskToAdd.TrackFramesOffsets.Add(diskToAdd.DiskLength * 75);
+                    bool hasLengthInfo = diskToAdd.TrackFramesOffsets.Count + 1 == diskToAdd.Tracks.Count;
+				    for (int i = 0; i < diskToAdd.Tracks.Count; i++)
+				    {
+                        string artist = diskToAdd.Artist, title = diskToAdd.Tracks[i];
+                        if (!string.IsNullOrWhiteSpace(diskToAdd.Tracks[i]) && diskToAdd.Tracks[i].Contains(" / "))
+                        {
+                            var tmp = diskToAdd.Tracks[i].Split(new[] {" / "}, StringSplitOptions.None);
+                            artist = tmp[0];
+                            title = tmp[1];
+                        }
+
+				        var track = new Track
+				                        {
+				                            AlbumId = diskToAdd.Id,
+				                            TrackNo = i + 1,
+                                            Artist = artist,
+                                            Genre = diskToAdd.Genre,
+                                            Title = title,
+                                            Year = diskToAdd.Year,
+                                            Length = hasLengthInfo ? (diskToAdd.TrackFramesOffsets[i + 1] - diskToAdd.TrackFramesOffsets[i]) / 75 : (int?)null,
+				                        };
+                        session.Store(track);
+				    }
+
 					if (count < BatchSize) 
 						return;
 
