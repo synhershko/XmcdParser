@@ -26,7 +26,7 @@ namespace XmcdParser
 					count += 1;
 
                     diskToAdd.TrackFramesOffsets.Add(diskToAdd.DiskLength * 75);
-                    bool hasLengthInfo = diskToAdd.TrackFramesOffsets.Count + 1 == diskToAdd.Tracks.Count;
+                    bool hasLengthInfo = diskToAdd.TrackFramesOffsets.Count == diskToAdd.Tracks.Count + 1;
 				    for (int i = 0; i < diskToAdd.Tracks.Count; i++)
 				    {
                         string artist = diskToAdd.Artist, title = diskToAdd.Tracks[i];
